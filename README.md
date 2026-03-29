@@ -1,4 +1,6 @@
-# Smart Product Pricing (Amazon ML Challenge 2025)
+# Smart Product Pricing 
+
+Developed as part of a Amazon ML Challenge 2025 by Team Innovatrix
 
 ## Team Details
 
