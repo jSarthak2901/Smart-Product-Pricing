@@ -35,6 +35,10 @@ The model must output a predicted price for each product in the test dataset.
 
 ## Dataset
 
+Dataset:                                                                                                                                                           
+https://drive.google.com/file/d/1C-dLcFeTHytMwhzuxAf8sLqVbakwyGCn/view?usp=drive_link
+
+
 The dataset consists of:
 
 - 75,000 training samples (with price labels)
@@ -140,6 +144,3 @@ Requirements:
 
 ---
 
-## Dataset 
-Dataset:                                                                                                                                                           
-https://drive.google.com/file/d/1C-dLcFeTHytMwhzuxAf8sLqVbakwyGCn/view?usp=drive_link
