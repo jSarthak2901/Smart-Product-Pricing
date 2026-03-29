@@ -6,7 +6,7 @@ Developed as part of a Amazon ML Challenge 2025 by Team Innovatrix
 
 Team Name: Innovatrix  
 
-Members:
+Team Members:
 - Sarthak Jain  
 - Keshav Kumar  
 - Aishwarya Lakshmi  
