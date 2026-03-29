@@ -1,4 +1,4 @@
-# Smart Product Pricing Challenge (ML Challenge 2025)
+# Smart Product Pricing (Amazon ML Challenge 2025)
 
 ## Team Details
 
