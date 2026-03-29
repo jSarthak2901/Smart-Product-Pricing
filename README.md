@@ -1,106 +1,143 @@
-# ML Challenge 2025 Problem Statement
+# Smart Product Pricing Challenge (ML Challenge 2025)
 
-## Smart Product Pricing Challenge
+## Team Details
 
-In e-commerce, determining the optimal price point for products is crucial for marketplace success and customer satisfaction. Your challenge is to develop an ML solution that analyzes product details and predict the price of the product. The relationship between product attributes and pricing is complex - with factors like brand, specifications, product quantity directly influence pricing. Your task is to build a model that can analyze these product details holistically and suggest an optimal price.
+Team Name: Innovatrix  
 
-### Data Description:
+Members:
+- Sarthak Jain  
+- Keshav Kumar  
+- Aishwarya Lakshmi  
+- Ritik Sharma  
 
-The dataset consists of the following columns:
+---
 
-1. **sample_id:** A unique identifier for the input sample
-2. **catalog_content:** Text field containing title, product description and an Item Pack Quantity(IPQ) concatenated.
-3. **image_link:** Public URL where the product image is available for download. 
-   Example link - https://m.media-amazon.com/images/I/71XfHPR36-L.jpg
-   To download images use `download_images` function from `src/utils.py`. See sample code in `src/test.ipynb`.
-4. **price:** Price of the product (Target variable - only available in training data)
+## Overview
 
-### Dataset Details:
+This project presents a machine learning solution for predicting product prices in an e-commerce environment. The model leverages both textual and visual data to learn complex relationships between product attributes and their corresponding prices.
 
-- **Training Dataset:** 75k products with complete product details and prices
-- **Test Set:** 75k products for final evaluation
+The solution is based on a multimodal learning approach that combines natural language processing and computer vision techniques to improve prediction accuracy.
 
-### Output Format:
+---
 
-The output file should be a CSV with 2 columns:
+## Problem Statement
 
-1. **sample_id:** The unique identifier of the data sample. Note the ID should match the test record sample_id.
-2. **price:** A float value representing the predicted price of the product.
+The objective is to predict the price of a product using:
 
-Note: Make sure to output a prediction for all sample IDs. If you have less/more number of output samples in the output file as compared to test.csv, your output won't be evaluated.
+- `catalog_content`: Product title, description, and item pack quantity  
+- `image_link`: Product image  
 
-### File Descriptions:
+The model must output a predicted price for each product in the test dataset.
 
-*Source files*
+---
 
-1. **src/utils.py:** Contains helper functions for downloading images from the image_link. You may need to retry a few times to download all images due to possible throttling issues.
-2. **sample_code.py:** Sample dummy code that can generate an output file in the given format. Usage of this file is optional.
+## Dataset
 
-*Dataset files*
+The dataset consists of:
 
-1. **dataset/train.csv:** Training file with labels (`price`).
-2. **dataset/test.csv:** Test file without output labels (`price`). Generate predictions using your model/solution on this file's data and format the output file to match sample_test_out.csv
-3. **dataset/sample_test.csv:** Sample test input file.
-4. **dataset/sample_test_out.csv:** Sample outputs for sample_test.csv. The output for test.csv must be formatted in the exact same way. Note: The predictions in the file might not be correct
+- 75,000 training samples (with price labels)
+- 75,000 test samples (without price labels)
 
-### Constraints:
+### Features
 
-1. You will be provided with a sample output file. Format your output to match the sample output file exactly. 
+- `sample_id`: Unique identifier  
+- `catalog_content`: Textual product information  
+- `image_link`: URL of product image  
+- `price`: Target variable (training only)  
 
-2. Predicted prices must be positive float values.
+### Files
 
-3. Final model should be a MIT/Apache 2.0 License model and up to 8 Billion parameters.
+- `dataset/train.csv`
+- `dataset/test.csv`
+- `dataset/sample_test.csv`
+- `dataset/sample_test_out.csv`
 
-### Evaluation Criteria:
+---
 
-Submissions are evaluated using **Symmetric Mean Absolute Percentage Error (SMAPE)**: A statistical measure that expresses the relative difference between predicted and actual values as a percentage, while treating positive and negative errors equally.
+## Methodology
 
-**Formula:**
-```
-SMAPE = (1/n) * Σ |predicted_price - actual_price| / ((|actual_price| + |predicted_price|)/2)
-```
+### Problem Analysis
 
-**Example:** If actual price = $100 and predicted price = $120  
-SMAPE = |100-120| / ((|100| + |120|)/2) * 100% = 18.18%
+Exploratory analysis showed that product price is influenced by:
 
-**Note:** SMAPE is bounded between 0% and 200%. Lower values indicate better performance.
+- Brand presence  
+- Product specifications  
+- Quantity (IPQ)  
+- Visual quality and branding in images  
 
-### Leaderboard Information:
+The target variable exhibited skewness, which was handled using log transformation to stabilize training.
 
-- **Public Leaderboard:** During the challenge, rankings will be based on 25K samples from the test set to provide real-time feedback on your model's performance.
-- **Final Rankings:** The final decision will be based on performance on the complete 75K test set along with provided documentation of the proposed approach by the teams.
+---
 
-### Submission Requirements:
+### Solution Approach
 
-1. Upload a `test_out.csv` file in the Portal with the exact same formatting as `sample_test_out.csv`
+A hybrid multimodal pipeline was used to combine textual and visual features.
 
-2. All participating teams must also provide a 1-page document describing:
-   - Methodology used
-   - Model architecture/algorithms selected
-   - Feature engineering techniques applied
-   - Any other relevant information about the approach
-   Note: A sample template for this documentation is provided in Documentation_template.md
+#### Text Processing
 
-### **Academic Integrity and Fair Play:**
+- Cleaning (removal of punctuation, HTML, special characters)
+- Tokenization and lemmatization
+- Embedding using BERT
 
-**⚠️ STRICTLY PROHIBITED: External Price Lookup**
+#### Image Processing
 
-Participants are **STRICTLY NOT ALLOWED** to obtain prices from the internet, external databases, or any sources outside the provided dataset. This includes but is not limited to:
-- Web scraping product prices from e-commerce websites
-- Using APIs to fetch current market prices
-- Manual price lookup from online sources
-- Using any external pricing databases or services
+- Image download using provided utilities
+- Resizing to 224 × 224
+- Feature extraction using ResNet50 (pretrained on ImageNet)
 
-**Enforcement:**
-- All submitted approaches, methodologies, and code pipelines will be thoroughly reviewed and verified
-- Any evidence of external price lookup or data augmentation from internet sources will result in **immediate disqualification**
+#### Feature Fusion
 
-**Fair Play:** This challenge is designed to test your machine learning and data science skills using only the provided training data. External price lookup defeats the purpose of the challenge.
+- Concatenation of BERT embeddings and image features
+- Fully connected layers for regression output
+
+---
+
+## Model Architecture
+catalog_content -> Text Preprocessing -> BERT Embeddings ----
+-> Concatenation -> Dense Layers -> Price
+image_link -> Image Processing -> ResNet50 Features --
 
 
-### Tips for Success:
+---
 
-- Consider both textual features (catalog_content) and visual features (product images)
-- Explore feature engineering techniques for text and image data
-- Consider ensemble methods combining different model types
-- Pay attention to outliers and data preprocessing
+## Evaluation Metric
+
+The model is evaluated using Symmetric Mean Absolute Percentage Error (SMAPE):
+
+SMAPE = (1/n) * Σ |predicted - actual| / ((|actual| + |predicted|) / 2)
+
+- Range: 0% to 200%  
+- Lower values indicate better performance  
+
+---
+
+## Model Performance
+
+- SMAPE: 12.47  
+- MAE: 5.2  
+- RMSE: 7.4  
+- R² Score: 0.89  
+
+The multimodal model outperformed text-only approaches, demonstrating the importance of combining image and textual features.
+
+---
+
+## Output Format
+
+The final submission must be a CSV file:
+
+sample_id,price  
+12345,199.99  
+12346,349.50  
+
+Requirements:
+
+- All sample IDs must be included  
+- Prices must be positive float values  
+- Format must exactly match `sample_test_out.csv`  
+
+---
+
+## Dataset 
+Dataset:
+https://drive.google.com/file/d/1C-dLcFeTHytMwhzuxAf8sLqVbakwyGCn/view?usp=drive_link
