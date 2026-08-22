@@ -31,13 +31,14 @@ The objective is to predict the price of a product using:
 
 The model must output a predicted price for each product in the test dataset.
 
+https://drive.google.com/file/d/1oas-qfzT0S9tTBqYpAou8PA0YraZTRkw/view?usp=drive_link
+
 ---
 
 ## Dataset
 
 Dataset:                                                                                                                                                           
-https://drive.google.com/file/d/1C-dLcFeTHytMwhzuxAf8sLqVbakwyGCn/view?usp=drive_link
-
+https://drive.google.com/file/d/19C_Zqe948zArl2U5mdc6rwSCHuzEYvtk/view?usp=drive_link
 
 The dataset consists of:
 
@@ -143,4 +144,8 @@ Requirements:
 - Format must exactly match `sample_test_out.csv`  
 
 ---
+
+## Report:
+https://drive.google.com/file/d/1w0dA3lOdGNolk6RkAn5ms6glNXCmg4rN/view?usp=drive_link
+
 
